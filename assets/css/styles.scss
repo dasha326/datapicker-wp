@@ -1,3 +1,159 @@
-body {
-  background-color: red;
+:root {
+  --datepicker-font-size: 13px;
+  --datepicker-border-radius: 10px;
+  --datepicker-bg-color: #fff;
+  --datepicker-text-color: #282828;
+  --datepicker-selected-bg-color: #BAF048;
+  --datepicker-selected-text-color: #ffffff;
+
+  --datepicker-out-of-month-color: #aaa;
+
+  --datepicker-disabled-text-color: #CBCBCC;
+  --datepicker-disabled-bg-color: #F5F6F8;
+
+  --datepicker-months-bg: linear-gradient(180deg, #FFFFFF 0%, #F8F8F8 51.6%, #FFFFFF 98.91%);
+  --datepicker-months-width: 218px;
+  --datepicker-month-border-color: #c6c6c6;
+
+
+
+  --datepicker-month-font-size: 14px;
+}
+
+@font-face {
+  font-family: 'Formular';
+  src: url('../fonts/formular-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Formular';
+  src: url('../fonts/formular-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+.datepicker {
+  background-color: var(--datepicker-bg-color);
+  color: var(--datepicker-text-color);
+  font-size: var(--datepicker-font-size);
+  font-family: 'Formular', Arial, serif;
+  font-weight: 500;
+  &-container {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 355px;
+  }
+  &-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  //Список месяцев
+  &-months {
+    width: var(--datepicker-months-width);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: none;
+    padding: 0 13px;
+    height: calc(var(--datepicker-month-height) * 7); /* Высота чтобы 7 месяцев помещались */
+    justify-content: center; /* Центрируем контент по вертикали */
+    /* Убираем полосу прокрутки (scrollbar) */
+    -ms-overflow-style: none; /* IE и Edge */
+    scrollbar-width: none; /* Firefox */
+    background: var(--datepicker-months-bg);
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
+  //Месяц
+  &-month {
+    padding: 6px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center; /* Центрируем текст по вертикали */
+    justify-content: center; /* Центрируем текст по горизонтали */
+    font-size: var(--datepicker-month-font-size);
+
+    &:nth-child(1),
+    &:nth-child(9) {
+      font-size: .7em;
+      opacity: .1;
+    }
+    &:nth-child(2),
+    &:nth-child(8) {
+      font-size: .91em;
+      opacity: .2;
+    }
+    &:nth-child(3),
+    &:nth-child(7) {
+      font-size: .91em;
+      opacity: .3;
+    }
+    &:nth-child(4),
+    &:nth-child(6) {
+      font-size: .93em;
+      opacity: .4;
+    }
+    &.current {
+      font-weight: 700;
+      border-style: solid;
+      border-width: 1px 0;
+      border-color: var(--datepicker-month-border-color);
+    }
+  }
+}
+
+.datepicker-calendar {
+  flex-grow: 1;
+}
+
+.datepicker-day-labels {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 20px;
+  font-size: 0.8em;
+  color: #777;
+}
+
+.datepicker-day-label {
+  text-align: center;
+  font-size: 10px;
+}
+
+.datepicker-days {
+  display: grid;
+  grid-gap: 11px;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.datepicker-day {
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: var(--datepicker-border-radius);
+
+  &.selected {
+    background-color: var(--datepicker-selected-bg-color);
+    color: var(--datepicker-selected-text-color);
+  }
+
+  &.today {
+    font-weight: bold;
+  }
+
+  &.datepicker-day-out-of-month {
+    color: var(--datepicker-out-of-month-color);
+  }
+
+  &.past-day {
+    color: var(--datepicker-disabled-text-color);
+    background-color: var(--datepicker-disabled-bg-color);
+    pointer-events: none;
+  }
 }
